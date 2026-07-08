@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Back on Track Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-sidebar-open="false">
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="masthead-copy">
+          <p class="eyebrow">Research Ready Toolkit</p>
+          <h1>Back on Track Toolkit</h1>
+          <p class="intro">
+            A structured decision tool for research delivery teams to review
+            recruitment barriers, recommended actions, and the pathway taken.
+          </p>
+        </div>
+
+        <div class="masthead-actions">
+          <button
+            id="home-button"
+            class="home-link-button"
+            type="button"
+            aria-label="Return to home"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 11.5 12 5l8 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M7 10.5V19h10v-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <button
+            id="history-toggle-button"
+            class="button button-secondary button-compact"
+            type="button"
+            aria-controls="summary-panel"
+            aria-expanded="false"
+          >
+            Path taken
+          </button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <main
+          id="app"
+          class="card decision-stage"
+          tabindex="-1"
+          aria-live="polite"
+        ></main>
+
+        <aside
+          id="summary-panel"
+          class="card summary-panel"
+          aria-labelledby="summary-panel-title"
+        >
+          <div class="summary-panel-header">
+            <div>
+              <h2 id="summary-panel-title">Path taken</h2>
+            </div>
+
+            <button
+              id="close-sidebar-button"
+              class="button button-secondary button-icon"
+              type="button"
+              aria-label="Close path summary"
+            >
+              Close
+            </button>
+          </div>
+
+          <section class="summary-status-card" aria-labelledby="summary-status-title">
+            <p id="summary-status-title" class="summary-status-label">Current status</p>
+            <p id="summary-status" class="summary-status">
+              Your answers and recommended actions will appear here as you work
+              through the toolkit.
+            </p>
+            <dl class="summary-metrics">
+              <div>
+                <dt>Questions answered</dt>
+                <dd id="summary-count">0</dd>
+              </div>
+            </dl>
+          </section>
+
+          <ol id="history-list" class="history-list"></ol>
+        </aside>
+      </div>
+    </div>
+
+    <button
+      id="sidebar-backdrop"
+      class="sidebar-backdrop"
+      type="button"
+      aria-label="Close path summary"
+      hidden
+    ></button>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
