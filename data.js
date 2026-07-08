@@ -21,7 +21,24 @@ window.toolkitData = {
       section: "Start",
       title: "Back on Track Toolkit",
       text: "This toolkit helps research delivery teams work through a structured set of questions when a study is missing recruitment milestones.",
-      helperText: "Developed by the RDUHT R&D Department.\nTechnical support: tate.graham2@nhs.net",
+      faqs: [
+        {
+          question: "Who should use this toolkit?",
+          answer: "Research delivery teams can use this toolkit when a study is not meeting expected recruitment milestones and a structured review is needed."
+        },
+        {
+          question: "What does the toolkit do?",
+          answer: "It guides teams through key questions across study delivery, highlights possible barriers, and records the recommended actions and pathway taken."
+        },
+        {
+          question: "Will I get a summary at the end?",
+          answer: "Yes. At the end of the journey you can review the completion summary and download the pathway taken as a CSV."
+        },
+        {
+          question: "Who do I contact for technical support?",
+          answer: "For technical support, contact tate.graham2@nhs.net."
+        }
+      ],
       next: "toolkit_intro",
       nextLabel: "Continue"
     },

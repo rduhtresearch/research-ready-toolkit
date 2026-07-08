@@ -127,6 +127,10 @@
     sidebarBackdrop.hidden = !state.sidebarOpen;
   }
 
+  function syncScrollState() {
+    document.body.setAttribute("data-scrolled", window.scrollY > 12 ? "true" : "false");
+  }
+
   function openSidebar() {
     state.sidebarOpen = true;
     syncShellState();
@@ -456,6 +460,28 @@
 
   function renderFooter(node, container) {
     if (node.layout === "home") {
+      var homeFooter = document.createElement("div");
+      homeFooter.className = "footer-actions footer-actions-home";
+
+      var homeFooterCopy = document.createElement("p");
+      homeFooterCopy.className = "home-footer";
+
+      homeFooterCopy.appendChild(document.createTextNode("Developed by the "));
+
+      var homeFooterLink = document.createElement("a");
+      homeFooterLink.className = "home-footer-link";
+      homeFooterLink.href = "https://www.royaldevon.nhs.uk/about-us/research-and-development/";
+      homeFooterLink.target = "_blank";
+      homeFooterLink.rel = "noreferrer";
+      homeFooterLink.textContent = "RDUHT R&D Department";
+      homeFooterCopy.appendChild(homeFooterLink);
+
+      homeFooterCopy.appendChild(
+        document.createTextNode(". " + new Date().getFullYear())
+      );
+
+      homeFooter.appendChild(homeFooterCopy);
+      container.appendChild(homeFooter);
       return;
     }
 
@@ -594,22 +620,64 @@
       var homePanel = document.createElement("div");
       homePanel.className = "home-panel";
 
+      var homeIntro = document.createElement("div");
+      homeIntro.className = "home-intro";
+
       var homeQuestion = document.createElement("h2");
       homeQuestion.className = "screen-question";
       homeQuestion.textContent = node.text;
-      homePanel.appendChild(homeQuestion);
+      homeIntro.appendChild(homeQuestion);
 
       if (node.helperText) {
         var homeHelper = document.createElement("p");
         homeHelper.className = "screen-helper";
         homeHelper.textContent = node.helperText;
-        homePanel.appendChild(homeHelper);
+        homeIntro.appendChild(homeHelper);
       }
 
       var homeNote = document.createElement("p");
       homeNote.className = "screen-note";
       homeNote.textContent = "Continue to open the toolkit.";
-      homePanel.appendChild(homeNote);
+      homeIntro.appendChild(homeNote);
+
+      homePanel.appendChild(homeIntro);
+
+      if (Array.isArray(node.faqs) && node.faqs.length > 0) {
+        var faqPanel = document.createElement("section");
+        faqPanel.className = "home-faq-panel";
+        faqPanel.setAttribute("aria-labelledby", "home-faq-title");
+
+        var faqTitle = document.createElement("h3");
+        faqTitle.className = "home-faq-title";
+        faqTitle.id = "home-faq-title";
+        faqTitle.textContent = "Frequently asked questions";
+        faqPanel.appendChild(faqTitle);
+
+        var faqList = document.createElement("div");
+        faqList.className = "home-faq-list";
+
+        node.faqs.forEach(function(item, index) {
+          var faqItem = document.createElement("details");
+          faqItem.className = "home-faq-item";
+          if (index === 0) {
+            faqItem.open = true;
+          }
+
+          var faqSummary = document.createElement("summary");
+          faqSummary.textContent = item.question;
+          faqItem.appendChild(faqSummary);
+
+          var faqAnswer = document.createElement("p");
+          faqAnswer.className = "home-faq-answer";
+          faqAnswer.textContent = item.answer;
+          faqItem.appendChild(faqAnswer);
+
+          faqList.appendChild(faqItem);
+        });
+
+        faqPanel.appendChild(faqList);
+        homePanel.appendChild(faqPanel);
+      }
 
       contentStack.appendChild(homePanel);
     } else {
@@ -691,6 +759,8 @@
   homeButton.addEventListener("click", restart);
   closeSidebarButton.addEventListener("click", closeSidebar);
   sidebarBackdrop.addEventListener("click", closeSidebar);
+  window.addEventListener("scroll", syncScrollState, { passive: true });
 
   render();
+  syncScrollState();
 })();
