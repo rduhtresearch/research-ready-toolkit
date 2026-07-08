@@ -682,16 +682,26 @@
       contentStack.appendChild(homePanel);
     } else {
       var isRecommendation = node.type === "action" || node.type === "exit";
+      var isPositiveExit = node.type === "exit" && node.outcome === "on_track";
       var contentPanel = document.createElement("div");
-      contentPanel.className = isRecommendation
-        ? "recommendation-panel"
-        : "question-panel";
+      if (isPositiveExit) {
+        contentPanel.className = "recommendation-panel success-panel";
+      } else {
+        contentPanel.className = isRecommendation
+          ? "recommendation-panel"
+          : "question-panel";
+      }
 
       var contentTag = document.createElement("span");
-      contentTag.className = isRecommendation
-        ? "content-tag recommendation-tag"
-        : "content-tag question-tag";
-      contentTag.textContent = isRecommendation ? "Recommendation" : "Question";
+      if (isPositiveExit) {
+        contentTag.className = "content-tag success-tag";
+        contentTag.textContent = "On track";
+      } else {
+        contentTag.className = isRecommendation
+          ? "content-tag recommendation-tag"
+          : "content-tag question-tag";
+        contentTag.textContent = isRecommendation ? "Recommendation" : "Question";
+      }
       contentPanel.appendChild(contentTag);
 
       var question = document.createElement("h2");
@@ -723,7 +733,9 @@
       if (node.type === "exit") {
         var exitNote = document.createElement("p");
         exitNote.className = "screen-note";
-        exitNote.textContent = "This pathway needs escalation or a managed next step before the toolkit can continue.";
+        exitNote.textContent = isPositiveExit
+          ? "This pathway shows the study is currently on track."
+          : "This pathway needs escalation or a managed next step before the toolkit can continue.";
         contentPanel.appendChild(exitNote);
       }
 

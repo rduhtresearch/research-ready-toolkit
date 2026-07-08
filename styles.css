@@ -453,6 +453,11 @@ body[data-home-screen="true"] .screen-question {
   background: #fff9e5;
 }
 
+.success-panel {
+  border-left-color: #007f3b;
+  background: #eef9f1;
+}
+
 .summary-panel-block {
   border-left: 6px solid var(--accent);
   background: #ffffff;
@@ -597,6 +602,11 @@ body[data-home-screen="true"] .screen-helper {
 .recommendation-tag {
   background: #fff1bf;
   color: #7a5700;
+}
+
+.success-tag {
+  background: #dff4e4;
+  color: #005a30;
 }
 
 .option-grid {
